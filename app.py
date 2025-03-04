@@ -15,3 +15,4 @@ print(constants.zero_Celsius)
 print(constants.degree_Fahrenheit)
 
 print(constants.horsepower)
+print(constants.inch)
