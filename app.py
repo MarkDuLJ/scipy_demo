@@ -102,3 +102,11 @@ interp_func = Rbf(xs,ys)
 newarr = interp_func(np.arange(2.1, 3, .1))
 print(newarr)
 '''
+
+from scipy.stats import ttest_ind, kstest, describe
+
+v1 = np.random.normal(size=100)
+v2 = np.random.normal(size=100)
+print(ttest_ind(v1, v2).pvalue)
+print(kstest(v1, 'norm'))
+print(describe(v2))
