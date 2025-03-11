@@ -1,112 +1,66 @@
-from scipy.optimize import root
-from scipy.sparse.csgraph import connected_components, dijkstra, floyd_warshall, bellman_ford, depth_first_order
-from scipy.optimize import minimize
-from scipy.sparse import csr_matrix
-from scipy.spatial import Delaunay
-import numpy as np
-from math import cos
+import pandas as pd
+import matplotlib as plt
 
-def eqn(x):
-    return x + cos(x)
+mydataset = {
+    'cars':["BMW", "Honda", "Toyota"],
+    'passing':[3, 8, 2],
+}
 
-myroot = root(eqn, 0)
+print(pd.DataFrame(mydataset))
+print(pd.__version__)
+print(pd.Series([1,2,3], index=['A','B','C']))
 
-print(myroot.x)
+calories = {
+    'day1': 2000,
+    'day2': 1000,
+    'day3': 3000,
+}
 
-def min_bfgs(x):
-    return x**2 + x +2
+print(pd.Series(calories))
+print(pd.Series(calories, index=['DAY_A','DAY_B']))
+print(pd.Series(calories, index=['day1','day3']))
+print(pd.read_json('test.json'))
 
-mymin = minimize(min_bfgs, 0, method='BFGS')
-print(mymin)
+import pandas as pd
 
-arr = np.array([0,0,0,0,0,0,1,1,0,2])
-print(csr_matrix(arr))
+data = {
+  "Duration":{
+    "0":60,
+    "1":60,
+    "2":60,
+    "3":45,
+    "4":45,
+    "5":60
+  },
+  "Pulse":{
+    "0":110,
+    "1":117,
+    "2":103,
+    "3":109,
+    "4":117,
+    "5":102
+  },
+  "Maxpulse":{
+    "0":130,
+    "1":145,
+    "2":135,
+    "3":175,
+    "4":148,
+    "5":127
+  },
+  "Calories":{
+    "0":409,
+    "1":479,
+    "2":340,
+    "3":282,
+    "4":406,
+    "5":300
+  }
+}
 
-arr_2d = np.array([
-    [0,0,0],
-    [0,0,1],
-    [1,0,2]
-])
-print(csr_matrix(arr_2d).data)
-mat = csr_matrix(arr_2d)
-print("Convert to csc:\n", mat.tocsc())
-'''
-mat.sum_duplicates()
-print("Eliminating duplicates:\n",mat)
-mat.eliminate_zeros()
-print("After eliminate zeros:\n",mat)
-'''
-
-graph_arr = np.array([
-    [0,1,2],
-    [1,0,0],
-    [2,0,0],
-])
-
-csr_graph_arr = csr_matrix(graph_arr)
-
-print(csr_graph_arr)
-print(connected_components(csr_graph_arr))
-print(dijkstra(csr_graph_arr, return_predecessors=True, indices=0))
-print(floyd_warshall(csr_graph_arr, return_predecessors=True))
-print(bellman_ford(csr_graph_arr, return_predecessors=True, indices=0))
-print(depth_first_order(csr_graph_arr, 1))
-
-points = np.array([
-    [2,4],
-    [3,4],
-    [3,0],
-    [2,2],
-    [4,1]
-])
-
-'''
-simplices = Delaunay(points).simplices
-
-plt.triplot(points[:, 0], points[:,1], simplices)
-plt.scatter(points[:,0], points[:,1], color='r')
-
+df = pd.read_csv('test.csv')
+df.plot()
 plt.show()
-'''
-from scipy import io
-io.savemat('arr.mat', {'vec': arr})
+df["Date"] = pd.to_datetime(df["Date"])
 
-print(io.loadmat('arr.mat', squeeze_me=True)['vec'])
-
-'''
-from scipy.interpolate import interp1d
-
-xs = np.arange(10)
-ys = 2*xs + 1
-
-interp_func = interp1d(xs,ys)
-newarr = interp_func(np.arange(2.1, 3, 0.1))
-print(newarr)
-'''
-'''
-from scipy.interpolate import UnivariateSpline
-
-xs = np.arange(10)
-ys = xs**2 + np.sin(xs) + 1
-
-interp_func = UnivariateSpline(xs,ys)
-newarr = interp_func(np.arange(2.1, 3, 0.1))
-print(newarr)
-
-from scipy.interpolate import Rbf
-
-xs = np.arange(10)
-ys = xs**2 + np.sin(xs) + 1
-
-interp_func = Rbf(xs,ys)
-newarr = interp_func(np.arange(2.1, 3, .1))
-print(newarr)
-'''
-
-from scipy.stats import ttest_ind, kstest, describe
-
-v1 = np.random.normal(size=100)
-v2 = np.random.normal(size=100)
-print(ttest_ind(v1, v2).pvalue)
-print(kstest(v1, 'norm'))
-print(describe(v2))
+print(df.to_string())
